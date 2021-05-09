@@ -1,1 +1,2 @@
-# udemy-react-and-golang-a-practical-guide
+# React and Golang: A Practical Guide
+## Antonio Papa Udemy Course
