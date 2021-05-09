@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/database"
 	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/models"
+	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/util"
 	"strconv"
 	"time"
 	"github.com/dgrijalva/jwt-go"
@@ -63,12 +64,8 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256,jwt.StandardClaims{
-		Issuer: strconv.Itoa(int(user.Id)),
-		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
-	})
+	token, err := util.GenerateJWT(strconv.Itoa(int(user.Id)))
 
-	token, err := claims.SignedString([]byte("secret"))
 	if err != nil {
 		return 	c.SendStatus(fiber.StatusInternalServerError)
 	}
@@ -93,21 +90,13 @@ type Claims struct {
 
 func User(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt")
-	token, err := jwt.ParseWithClaims(cookie, &Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte("secret"), nil
-	})
 
-	if err != nil || !token.Valid {
-		c.Status(fiber.StatusUnauthorized)
-		return c.JSON(fiber.Map{
-			"message": "unauthenticated",
-		})
-	}
+	id, _ := util.ParseJWT(cookie)
+	
 
-	claims := token.Claims.(*Claims)
 
 	var user models.User
-	database.DB.Where("id = ?", claims.Issuer).First(&user)
+	database.DB.Where("id = ?", id).First(&user)
 
 	return c.JSON(user)
 }
