@@ -1,10 +1,11 @@
 package database
 
 import (
+	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/models"
+	"log"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"log"
 )
 
 func Connect() {
@@ -17,11 +18,13 @@ func Connect() {
 	envpassword := env["PASSWORD"]
 	envdbname   := env["DBNAME"]
 
-	db, err := gorm.Open(mysql.Open(envuser+":"+envpassword+"@/"+envdbname), &gorm.Config{})
+	database, err := gorm.Open(mysql.Open(envuser+":"+envpassword+"@/"+envdbname), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect to database")
 	}
 
-	log.Println(db)
+	database.AutoMigrate(&models.User{})
+
+
 }
 
