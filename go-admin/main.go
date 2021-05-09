@@ -1,37 +1,20 @@
 package main
 
 import (
-    "fmt"
-    "log"
-    "github.com/gofiber/fiber/v2"
-    "gorm.io/gorm"
-    "gorm.io/driver/mysql"
-    "github.com/joho/godotenv"
+	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/database"
+	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/routes"
+	"github.com/gofiber/fiber/v2"
+	"log"
 )
 
 func main() {
 
-    var env map[string]string
-    env, err := godotenv.Read();
-    if err != nil {
-        log.Fatal("No .env file found")
-    }
-    envuser     := env["USER"]
-    envpassword := env["PASSWORD"]
-    envdbname   := env["DBNAME"]
+	database.Connect()
 
-    db, err := gorm.Open(mysql.Open(envuser+":"+envpassword+"@/"+envdbname), &gorm.Config{})
-    if err != nil {
-        panic("Failed to connect to database")
-    }
-    fmt.Println(db)
+	app := fiber.New()
 
-    app := fiber.New()
+	routes.Setup(app)
 
-    app.Get("/", func(c *fiber.Ctx) error {
-        return c.SendString("Hello, World 👋!")
-    })
-
-    log.Fatal(app.Listen(":8080"))
+	log.Fatal(app.Listen(":8080"))
 
 }
