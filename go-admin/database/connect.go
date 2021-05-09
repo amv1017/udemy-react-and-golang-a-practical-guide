@@ -8,6 +8,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var DB *gorm.DB
+
 func Connect() {
 	var env map[string]string
 	env, err := godotenv.Read();
@@ -22,9 +24,8 @@ func Connect() {
 	if err != nil {
 		panic("Failed to connect to database")
 	}
+	DB = database
 
 	database.AutoMigrate(&models.User{})
-
-
 }
 
