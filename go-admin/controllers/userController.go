@@ -47,7 +47,7 @@ func GetUser(c *fiber.Ctx) error {
 	user := models.User {
 		Id: uint(id),
 	}
-	database.DB.Find(&user)
+	database.DB.Preload("Role").Find(&user)
 	return c.JSON(user)
 }
 
