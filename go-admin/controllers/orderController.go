@@ -1,12 +1,11 @@
 package controllers
 
 import (
+	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/database"
+	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/models"
 	"encoding/csv"
 	"os"
 	"strconv"
-
-	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/database"
-	"github.com/amv1017/udemy-building-modern-web-apps-with-golang/go-admin/models"
 	"github.com/gofiber/fiber/v2"
 )
 
