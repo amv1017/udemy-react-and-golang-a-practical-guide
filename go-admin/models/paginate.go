@@ -23,3 +23,4 @@ func Paginate(db *gorm.DB, entity Entity, page int) (fiber.Map) {
 	}
 	
 }
+
