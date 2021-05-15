@@ -5,7 +5,7 @@ import (
 )
 
 type Order struct {
-	Id			uint		`json:"id"`
+		Id		uint		`json:"id"`
 	FirstName	string		`json:"-"`
 	LastName	string		`json:"-"`
 	Name		string		`json:"name" gorm:"-"`
