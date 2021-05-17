@@ -1,2 +1,14 @@
 go-admin/.env
 react-admin/node_modules
+react-admin/.pnp
+react-admin/.pnp.js
+react-admin/coverage
+react-admin/build
+react-admin/.DS_Store
+react-admin/.env.local
+react-admin/.env.development.local
+react-admin/.env.test.local
+react-admin/.env.production.local
+react-admin/npm-debug.log*
+react-admin/yarn-debug.log*
+react-admin/yarn-error.log*
