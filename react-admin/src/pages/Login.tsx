@@ -11,10 +11,10 @@ export default function Login() {
     const submit = async (e: SyntheticEvent) => {
 
         e.preventDefault()
-        const { data } = await axios.post('http://localhost:8080/api/login', {
+        const { data } = await axios.post('login', {
             email,
             password
-        }, { withCredentials: true })
+        })
 
         setRedirect(true)
 
