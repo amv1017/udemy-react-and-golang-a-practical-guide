@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Nav from '../components/Nav';
-import Menu from '../components/Menu';
-import { Redirect } from 'react-router-dom';
-import axios from 'axios';
+import Nav from '../components/Nav'
+import Menu from '../components/Menu'
+import { Redirect } from 'react-router-dom'
+import axios from 'axios'
 
 const Wrapper = (props: any) => {
 
