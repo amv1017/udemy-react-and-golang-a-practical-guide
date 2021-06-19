@@ -1,7 +1,6 @@
 import React from 'react'
-import logo from './logo.svg'
 import './App.css'
-import Users from './pages/Users'
+import Users from './pages/users/Users'
 import Dashboard from './pages/Dashboard'
 import { BrowserRouter, Route } from 'react-router-dom'
 import Register from './pages/Register'
