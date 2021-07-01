@@ -6,6 +6,8 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import UserCreate from './pages/users/UserCreate'
+import UserEdit from './pages/users/UserEdit'
+import Roles from './pages/roles/Roles'
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
         <Route path={'/register'} component={Register} />
         <Route path={'/login'} component={Login} />
         <Route path={'/users/create'} component={UserCreate} />
+        <Route path={'/users/:id/edit'} component={UserEdit} />
+        <Route path={'/roles'} exact component={Roles} />
       </BrowserRouter>
     </div>
   )
