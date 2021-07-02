@@ -6,15 +6,15 @@ import { Role } from '../../models/role'
 
 export default function Roles() {
 
-    const [roles, setRoles] = useState([])
-    useEffect(() => {
-        (
-            async() => {
-                const { data } = await axios.get('roles')
-                setRoles(data)
-            }
-        )()
-    },[])
+	const [roles, setRoles] = useState([])
+	useEffect(() => {
+		(
+			async() => {
+				const { data } = await axios.get('roles')
+				setRoles(data)
+			}
+		)()
+	},[])
 
 	const del = async (id: number) => {
 		if (window.confirm('Are you sure you want to delete this record?')) {
@@ -23,10 +23,10 @@ export default function Roles() {
 		}
 	}
 
-    return(
-        <Wrapper>
+	return(
+		<Wrapper>
 
-            <div className="pt-3 pb-2 mb-3 border-bottom">
+			<div className="pt-3 pb-2 mb-3 border-bottom">
 				<Link to="/roles/create" className="btn btn-sm btn-outline-secondary">Add</Link>
 			</div>
 
@@ -40,27 +40,27 @@ export default function Roles() {
 				</tr>
 				</thead>
 				<tbody>
-                    {roles.map((role: Role) => {
-                        return (
-                            <tr key={role.id}>
-                                <td>{role.id}</td>
-                                <td>{role.name}</td>
-                                <td>
-                                    <div className="btn-group mr-2">
-                                        <Link to={`/roles/${role.id}/edit`}
-                                            className="btn btn-sm btn-outline-secondary">Edit</Link>
-                                        <a href="#"
-                                            className="btn btn-sm btn-outline-secondary"
-                                            onClick={() => del(role.id)}>Delete</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        )
-                    })}
+					{roles.map((role: Role) => {
+						return (
+							<tr key={role.id}>
+								<td>{role.id}</td>
+								<td>{role.name}</td>
+								<td>
+									<div className="btn-group mr-2">
+										<Link to={`/roles/${role.id}/edit`}
+											className="btn btn-sm btn-outline-secondary">Edit</Link>
+										<a href="#"
+											className="btn btn-sm btn-outline-secondary"
+											onClick={() => del(role.id)}>Delete</a>
+									</div>
+								</td>
+							</tr>
+						)
+					})}
 				</tbody>
 			</table>
 			</div>
 
-        </Wrapper>
-    )
+		</Wrapper>
+	)
 }

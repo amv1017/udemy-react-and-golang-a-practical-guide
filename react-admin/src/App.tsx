@@ -10,6 +10,7 @@ import UserEdit from './pages/users/UserEdit'
 import Roles from './pages/roles/Roles'
 import RoleCreate from './pages/roles/RoleCreate'
 import RoleEdit from './pages/roles/RoleEdit'
+import Products from './pages/products/Products'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path={'/roles'} exact component={Roles} />
         <Route path={'/roles/create'} component={RoleCreate} />
         <Route path={'/roles/:id/edit'} component={RoleEdit} />
+        <Route path={'/products'} exact component={Products} />
       </BrowserRouter>
     </div>
   )
