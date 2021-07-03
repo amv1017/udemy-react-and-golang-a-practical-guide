@@ -1,35 +1,38 @@
 import axios from 'axios'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState, Dispatch } from 'react'
 import Wrapper from '../components/Wrapper'
+import { connect } from 'react-redux'
+import { User } from '../models/user'
+import { setUser } from '../redux/actions/setUserAction'
 
-export default function Profile() {
+const Profile = (props: {user: User, setUser: (user: User) => void}) => {
 
 	const [first_name, setFirstName] = useState('')
 	const [last_name, setLastName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [password_confirm, setPasswordConfirm] = useState('')
-	const [redirect, setRedirect] = useState(false)
 
     useEffect(() => {
-        (
-            async () => {
-                const {data} = await axios.get('user')
-                setFirstName(data.first_name)
-                setLastName(data.last_name)
-                setEmail(data.email)
-
-            }
-        )()
-    }, [])
+                setFirstName(props.user.first_name)
+                setLastName(props.user.last_name)
+                setEmail(props.user.email)
+    }, [props.user])
 
     const infoSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
-        await axios.put('users/info',{
+        const {data} = await axios.put('users/info',{
             first_name,
             last_name,
             email
         })
+        props.setUser(new User(
+            data.id,
+            data.first_name,
+            data.last_name,
+            data.email,
+            data.role,
+        ))
     }
 
     const passwordSubmit = async (e: SyntheticEvent) => {
@@ -91,3 +94,16 @@ export default function Profile() {
         </Wrapper>
     )
 }
+
+export default connect(
+    (state: {user: User}) => {
+        return {
+            user: state.user
+        }
+    },
+    (dispatch: Dispatch<any>) => {
+        return {
+            setUser: (user: User) => dispatch(setUser(user))
+        }
+    }
+)(Profile)
