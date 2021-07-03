@@ -6,11 +6,22 @@ import { Order } from '../../models/order'
 import { OrderItem } from '../../models/order-item'
 import { idText } from 'typescript'
 
+const hide = {
+	maxHeight: 0,
+	transition: '1000ms ease-in'
+}
+
+const show = {
+	maxHeight: '150px',
+	transition: '1000ms ease-out'
+}
+
 export default function Orders() {
 
 	const [orders, setOrders] = useState([])
 	const [page, setPage] = useState(1)
 	const [lastPage, setLastPage] = useState(0)
+	const [selected, setSelected] = useState(0)
 
 	useEffect(() => {
 		(
@@ -22,10 +33,30 @@ export default function Orders() {
 		)()
 	}, [page])
 
+	const select = (id: number) => {
+		setSelected(selected !== id ? id : 0)
+	}
+
+	const handleExport = async () => {
+		const {data} = await axios.post('export', {}, {
+			responseType: 'blob'
+		})
+		const blob = new Blob([data], {type: 'text/csv'})
+		const url = window.URL.createObjectURL(data)
+		const link = document.createElement('a')
+		link.href = url
+		link.download = 'orders.csv'
+		link.click()
+	}
+
 	return(
 		<Wrapper>
+			<div className="pt-3 pb-2 mb-3 border-bottom">
+				<a href="#" className="btn btn-sm btn-outline-secondary" onClick={handleExport}>Export</a>
+			</div>
+
 			<div className="table-responsive">
-				<table className="table table-striped table-sm">
+				<table className="table table-sm">
 					<thead>
 					<tr>
 						<th>#</th>
@@ -47,13 +78,14 @@ export default function Orders() {
 										<td>
 											<a href="#"
 												className="btn btn-sm btn-outline-secondary"
+												onClick={() => select(o.id)}
 												>View
 											</a>
 										</td>
 									</tr>
 									<tr>
 										<td colSpan={5}>
-											<div>
+											<div className="overflow-hidden" style={selected === o.id ? show : hide}>
 												<table className="table table-sm">
 												<thead>
 													<tr>
